@@ -1,0 +1,2186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operation Vijay — Liberation of Goa, 1961</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f5ead5;
+    --aged: #e8d5b0;
+    --vellum: #d4b896;
+    --ink: #1a0f0a;
+    --sepia: #3d2b1a;
+    --rust: #8b3a1a;
+    --gold: #c9980a;
+    --gold-light: #e8b84b;
+    --bronze: #a0682a;
+    --army-green: #2d4a1e;
+    --deep-navy: #0d1b2e;
+    --blood-red: #7a1c1c;
+    --fog: rgba(245,234,213,0.85);
+    --shadow: rgba(26,15,10,0.7);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'EB Garamond', serif;
+    font-size: 18px;
+    line-height: 1.75;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--ink); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+  /* NAVIGATION */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: linear-gradient(180deg, rgba(26,15,10,0.98) 0%, rgba(26,15,10,0.85) 100%);
+    border-bottom: 1px solid rgba(201,152,10,0.3);
+    backdrop-filter: blur(10px);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+    overflow-x: auto;
+  }
+
+  .nav-links a {
+    color: var(--vellum);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 40%, #2d1a08 0%, #0d0805 60%, #000 100%);
+  }
+
+  /* Stars */
+  .stars-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(201,152,10,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 60%, rgba(245,234,213,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 15%, rgba(245,234,213,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 45%, rgba(201,152,10,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 80%, rgba(245,234,213,0.4) 0%, transparent 100%),
+      radial-gradient(2px 2px at 25% 85%, rgba(201,152,10,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 50%, rgba(245,234,213,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 75%, rgba(245,234,213,0.3) 0%, transparent 100%);
+  }
+
+  /* Map grid lines */
+  .map-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,152,10,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,152,10,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: mapScroll 30s linear infinite;
+  }
+
+  @keyframes mapScroll {
+    from { transform: translateY(0); }
+    to { transform: translateY(60px); }
+  }
+
+  /* Compass rose decoration */
+  .compass {
+    position: absolute;
+    bottom: 5%;
+    right: 4%;
+    width: 120px;
+    height: 120px;
+    opacity: 0.15;
+    animation: compassSpin 60s linear infinite;
+  }
+
+  @keyframes compassSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-flag {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+      rgba(255,153,0,0.04) 0%,
+      transparent 33%,
+      rgba(255,255,255,0.02) 33%,
+      transparent 66%,
+      rgba(19,136,8,0.04) 66%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--parchment);
+    text-shadow: 0 0 60px rgba(201,152,10,0.3), 0 2px 20px rgba(0,0,0,0.8);
+    margin-bottom: 0.5rem;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+
+  .hero-title span { color: var(--gold); }
+
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    color: var(--vellum);
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+
+  .hero-dates {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+
+  .hero-date-pill {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid rgba(201,152,10,0.5);
+    color: var(--gold-light);
+    background: rgba(201,152,10,0.06);
+  }
+
+  .hero-divider { width: 40px; height: 1px; background: var(--gold); opacity: 0.4; }
+
+  .hero-summary {
+    font-size: 1.1rem;
+    color: var(--aged);
+    max-width: 650px;
+    margin: 0 auto 3rem;
+    font-style: italic;
+    animation: fadeUp 1s 0.8s ease both;
+  }
+
+  .hero-scroll {
+    animation: fadeUp 1s 1s ease both;
+  }
+
+  .scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+    border-right: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(6px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── KEY STATS BAR ── */
+  .stats-bar {
+    background: linear-gradient(135deg, #0d0805 0%, #1a0e06 50%, #0d0805 100%);
+    border-top: 1px solid rgba(201,152,10,0.3);
+    border-bottom: 1px solid rgba(201,152,10,0.3);
+    padding: 2.5rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .stat-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+
+  .stat-number {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vellum);
+    opacity: 0.8;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-full {
+    max-width: 100%;
+    padding: 6rem 0;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Section Header */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+    color: var(--parchment);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .section-rule {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem auto;
+  }
+
+  .section-intro {
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--aged);
+    font-size: 1.05rem;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* ── DARK SECTION ── */
+  .dark-section {
+    background: linear-gradient(180deg, #000 0%, #0d0805 50%, #000 100%);
+    padding: 6rem 0;
+  }
+
+  /* ── MEDIUM SECTION ── */
+  .mid-section {
+    background: linear-gradient(180deg, #0d0805 0%, #100e0a 100%);
+    padding: 6rem 0;
+  }
+
+  /* ── PARCHMENT SECTION ── */
+  .parchment-section {
+    background: linear-gradient(180deg, #1a0f0a 0%, #120c08 100%);
+    padding: 6rem 0;
+    position: relative;
+  }
+
+  .parchment-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9980a' fill-opacity='0.02'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ── PROSE ── */
+  .prose {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .prose p {
+    margin-bottom: 1.5rem;
+    color: var(--aged);
+    font-size: 1.05rem;
+  }
+
+  .prose p:first-child::first-letter {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 4rem;
+    float: left;
+    line-height: 0.8;
+    margin: 0.1em 0.1em 0 0;
+    color: var(--gold);
+  }
+
+  .prose h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    color: var(--gold-light);
+    margin: 2.5rem 0 1rem;
+    text-transform: uppercase;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(201,152,10,0.2);
+  }
+
+  .highlight-quote {
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(201,152,10,0.05);
+    font-style: italic;
+    color: var(--parchment);
+    font-size: 1.1rem;
+  }
+
+  .highlight-quote cite {
+    display: block;
+    font-style: normal;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, var(--gold) 5%, var(--gold) 95%, transparent);
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .timeline-item.visible { opacity: 1; transform: none !important; }
+  .timeline-item:nth-child(odd) { transform: translateX(-30px); flex-direction: row; }
+  .timeline-item:nth-child(even) { transform: translateX(30px); flex-direction: row-reverse; }
+
+  .timeline-content {
+    flex: 1;
+    background: rgba(201,152,10,0.06);
+    border: 1px solid rgba(201,152,10,0.2);
+    padding: 1.5rem;
+    position: relative;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .timeline-content:hover {
+    border-color: rgba(201,152,10,0.5);
+    background: rgba(201,152,10,0.1);
+  }
+
+  .timeline-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--parchment);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-body { color: var(--aged); font-size: 0.95rem; }
+
+  .timeline-center {
+    width: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-dot {
+    width: 14px;
+    height: 14px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(201,152,10,0.6);
+    flex-shrink: 0;
+  }
+
+  /* ── ORDER OF BATTLE ── */
+  .battle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .battle-side {
+    padding: 2rem;
+    border: 1px solid rgba(201,152,10,0.25);
+    background: rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .battle-side::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .battle-india::before { background: linear-gradient(90deg, #ff9900, #138808); }
+  .battle-portugal::before { background: linear-gradient(90deg, #006600, #ff0000); }
+
+  .battle-side-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .battle-india .battle-side-title { color: #ff9900; }
+  .battle-portugal .battle-side-title { color: #cc2222; }
+
+  .battle-count {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--vellum);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .battle-unit {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(201,152,10,0.1);
+    font-size: 0.92rem;
+    color: var(--aged);
+  }
+
+  .battle-unit:last-child { border-bottom: none; }
+
+  .unit-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* ── STRENGTH BARS ── */
+  .strength-section {
+    margin: 3rem 0;
+  }
+
+  .strength-item {
+    margin-bottom: 1.5rem;
+  }
+
+  .strength-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .strength-label span:first-child { color: var(--parchment); }
+  .strength-label span:last-child { color: var(--gold); }
+
+  .strength-bar {
+    height: 6px;
+    background: rgba(245,234,213,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .strength-fill {
+    height: 100%;
+    border-radius: 3px;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .fill-india { background: linear-gradient(90deg, #ff9900, #138808); }
+  .fill-portugal { background: linear-gradient(90deg, #cc2222, #8b0000); }
+
+  /* ── TABS ── */
+  .tabs {
+    margin: 2rem 0;
+  }
+
+  .tab-nav {
+    display: flex;
+    border-bottom: 1px solid rgba(201,152,10,0.3);
+    margin-bottom: 2rem;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--vellum);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover, .tab-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold);
+  }
+
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; animation: fadeIn 0.4s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── CASUALTY TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+  }
+
+  .data-table thead tr {
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .data-table th {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0.8rem 1rem;
+    text-align: left;
+  }
+
+  .data-table td {
+    padding: 0.8rem 1rem;
+    color: var(--aged);
+    border-bottom: 1px solid rgba(201,152,10,0.1);
+    vertical-align: top;
+  }
+
+  .data-table tr:hover td {
+    background: rgba(201,152,10,0.05);
+    color: var(--parchment);
+  }
+
+  /* ── ACCORDION ── */
+  .accordion { margin: 1rem 0; }
+
+  .accordion-item {
+    border: 1px solid rgba(201,152,10,0.2);
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+
+  .accordion-header {
+    width: 100%;
+    background: rgba(201,152,10,0.05);
+    border: none;
+    color: var(--parchment);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s;
+  }
+
+  .accordion-header:hover { background: rgba(201,152,10,0.12); }
+
+  .accordion-icon {
+    font-size: 1.2rem;
+    color: var(--gold);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .accordion-item.open .accordion-icon { transform: rotate(45deg); }
+
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+  }
+
+  .accordion-item.open .accordion-body { max-height: 1000px; }
+
+  .accordion-content {
+    padding: 1.5rem;
+    color: var(--aged);
+    font-size: 0.97rem;
+    line-height: 1.8;
+    border-top: 1px solid rgba(201,152,10,0.15);
+  }
+
+  /* ── CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .card {
+    background: linear-gradient(135deg, rgba(201,152,10,0.05) 0%, rgba(0,0,0,0.3) 100%);
+    border: 1px solid rgba(201,152,10,0.2);
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s, transform 0.5s, border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .card:hover {
+    border-color: rgba(201,152,10,0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(201,152,10,0.1);
+  }
+
+  .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .card-body { color: var(--aged); font-size: 0.95rem; line-height: 1.7; }
+
+  /* ── TWO COLUMN ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* ── PULL QUOTES ── */
+  .pull-quote {
+    text-align: center;
+    padding: 3rem 2rem;
+    position: relative;
+    margin: 3rem 0;
+  }
+
+  .pull-quote::before {
+    content: '\201C';
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 8rem;
+    color: var(--gold);
+    opacity: 0.15;
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    line-height: 1;
+  }
+
+  .pull-quote-text {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    color: var(--parchment);
+    max-width: 700px;
+    margin: 0 auto 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pull-quote-attr {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* ── COMMANDERS ── */
+  .commanders-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .commander-card {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border: 1px solid rgba(201,152,10,0.2);
+    background: rgba(0,0,0,0.2);
+    transition: border-color 0.3s;
+  }
+
+  .commander-card:hover { border-color: rgba(201,152,10,0.5); }
+
+  .commander-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: rgba(201,152,10,0.1);
+  }
+
+  .commander-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--parchment);
+    margin-bottom: 0.3rem;
+  }
+
+  .commander-role {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .commander-side {
+    font-size: 0.8rem;
+    color: var(--vellum);
+    font-style: italic;
+  }
+
+  /* ── MAP DECORATIVE ── */
+  .decorative-map {
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem auto;
+    position: relative;
+  }
+
+  /* ── APPENDIX / TREATY ── */
+  .treaty-box {
+    background: rgba(201,152,10,0.05);
+    border: 2px solid rgba(201,152,10,0.3);
+    padding: 2rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .treaty-box::before {
+    content: '⚖';
+    position: absolute;
+    top: -0.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    padding: 0 0.5rem;
+    color: var(--gold);
+    font-size: 1.2rem;
+  }
+
+  .treaty-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .treaty-text {
+    font-style: italic;
+    color: var(--parchment);
+    text-align: center;
+    font-size: 1.05rem;
+  }
+
+  /* ── PHASE INDICATOR ── */
+  .phase-list {
+    counter-reset: phase;
+    list-style: none;
+    padding: 0;
+  }
+
+  .phase-item {
+    counter-increment: phase;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .phase-item.visible { opacity: 1; transform: translateX(0); }
+
+  .phase-num {
+    width: 50px;
+    height: 50px;
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .phase-content { padding-top: 0.2rem; }
+
+  .phase-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    margin-bottom: 0.4rem;
+  }
+
+  .phase-body { color: var(--aged); font-size: 0.95rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #000;
+    border-top: 1px solid rgba(201,152,10,0.2);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .footer-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--vellum);
+    opacity: 0.6;
+    margin-bottom: 2rem;
+  }
+
+  .footer-sources {
+    font-size: 0.8rem;
+    color: var(--vellum);
+    opacity: 0.5;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── BACK TO TOP ── */
+  .back-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 100;
+  }
+
+  .back-top.visible { opacity: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .two-col { grid-template-columns: 1fr; }
+    .battle-grid { grid-template-columns: 1fr; }
+    .timeline::before { left: 20px; }
+    .timeline-item { flex-direction: column !important; }
+    .timeline-center { display: none; }
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+  }
+
+  /* ── ANIMATED ELEMENTS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Decorative ornament */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    opacity: 0.4;
+    font-size: 1.5rem;
+    margin: 2rem 0;
+    letter-spacing: 1rem;
+  }
+
+  /* Tag badges */
+  .tag {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgba(201,152,10,0.4);
+    color: var(--gold);
+    margin: 0.2rem;
+  }
+
+  /* Diagonal divider */
+  .diagonal-divider {
+    height: 80px;
+    background: linear-gradient(135deg, transparent 49%, rgba(201,152,10,0.1) 50%, rgba(201,152,10,0.05) 51%, transparent 52%);
+  }
+
+  /* highlight text */
+  .hl { color: var(--gold-light); }
+  .hl-red { color: #e07070; }
+  .hl-green { color: #7ec87e; }
+
+  /* number callout */
+  .num-callout {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 3rem;
+    color: var(--gold);
+    display: block;
+    text-align: center;
+    margin: 1rem 0 0.2rem;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <span class="nav-brand">⚔ Operation Vijay · 1961</span>
+  <ul class="nav-links">
+    <li><a href="#background">Background</a></li>
+    <li><a href="#nationalism">Nationalism</a></li>
+    <li><a href="#planning">Planning</a></li>
+    <li><a href="#order">Order of Battle</a></li>
+    <li><a href="#chronology">Chronology</a></li>
+    <li><a href="#operations">Operations</a></li>
+    <li><a href="#casualties">Casualties</a></li>
+    <li><a href="#international">International</a></li>
+    <li><a href="#legal">Legal</a></li>
+    <li><a href="#legacy">Legacy</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="stars-bg"></div>
+  <div class="map-lines"></div>
+  <div class="hero-flag"></div>
+
+  <!-- Compass SVG -->
+  <svg class="compass" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" stroke="#c9980a" stroke-width="1"/>
+    <circle cx="50" cy="50" r="40" stroke="#c9980a" stroke-width="0.5"/>
+    <polygon points="50,5 54,50 50,45 46,50" fill="#c9980a"/>
+    <polygon points="50,95 54,50 50,55 46,50" fill="#888"/>
+    <polygon points="5,50 50,46 45,50 50,54" fill="#c9980a"/>
+    <polygon points="95,50 50,46 55,50 50,54" fill="#888"/>
+    <circle cx="50" cy="50" r="3" fill="#c9980a"/>
+    <text x="50" y="18" text-anchor="middle" fill="#c9980a" font-size="6" font-family="serif">N</text>
+    <text x="50" y="88" text-anchor="middle" fill="#888" font-size="6" font-family="serif">S</text>
+    <text x="12" y="53" text-anchor="middle" fill="#c9980a" font-size="6" font-family="serif">W</text>
+    <text x="88" y="53" text-anchor="middle" fill="#888" font-size="6" font-family="serif">E</text>
+  </svg>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow">▸ A Definitive Historical Account ◂</span>
+    <h1 class="hero-title">Operation <span>Vijay</span></h1>
+    <h2 class="hero-subtitle">The Liberation of Goa, Daman & Diu</h2>
+    <div class="hero-dates">
+      <div class="hero-date-pill">17 December 1961</div>
+      <div class="hero-divider"></div>
+      <div class="hero-date-pill">19 December 1961</div>
+    </div>
+    <p class="hero-summary">
+      In 36 to 48 hours, the Indian Armed Forces ended 451 years of Portuguese colonial rule on the Indian subcontinent — forever altering the course of post-colonial history and international law.
+    </p>
+    <div class="hero-scroll">
+      <a href="#stats" class="scroll-indicator">
+        <span>Scroll to Explore</span>
+        <div class="scroll-arrow"></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div id="stats" class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-number">451</span>
+    <span class="stat-label">Years of Colonial Rule Ended</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">48hrs</span>
+    <span class="stat-label">Duration of Operation</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">45,000</span>
+    <span class="stat-label">Indian Troops Deployed</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">3,995</span>
+    <span class="stat-label">Portuguese Defenders</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">4,669</span>
+    <span class="stat-label">Portuguese POWs Captured</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">1974</span>
+    <span class="stat-label">Portugal Formally Recognised India</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 1 · BACKGROUND
+═══════════════════════════════════════════════ -->
+<div id="background" class="dark-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter I —</span>
+      <h2 class="section-title">Background & Political Context</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">The Portuguese Empire's foothold on the Indian subcontinent — the Estado da Índia — had persisted for over four centuries, defying the sweeping tide of post-war decolonization.</p>
+    </div>
+
+    <div class="prose reveal">
+      <p>Goa had been a Portuguese overseas province (<em>"Estado da Índia"</em>) since 1510, when Afonso de Albuquerque's forces captured it for the crown. Over the subsequent centuries, it evolved from a maritime trading hub into a deeply entrenched colonial enclave on India's western coast. The Portuguese Empire, existing from 1415 to 1999, was the longest-lived European colonial empire, and its Indian holdings were central to its historical identity and self-conception.</p>
+
+      <p>Following Indian independence in 1947, Delhi repeatedly urged Lisbon to decolonize, but Portugal under the authoritarian dictator António de Oliveira Salazar, architect of the <em>Estado Novo</em>, obstinately refused to recognise the shifting paradigm. In 1951, the territories were reclassified not as subjugated colonies, but as <em>"overseas provinces" (províncias ultramarinas)</em> — integral, indivisible parts of metropolitan Portugal. This administrative sleight of hand was explicitly designed to bypass Article 73 of the UN Charter, which mandated reporting on non-self-governing territories.</p>
+
+      <div class="highlight-quote">
+        "India has not attacked Goa; Goa was never an integral part of British India. There is no legal frontier between India and Goa."
+        <cite>— Jawaharlal Nehru, UN Security Council, 18 December 1961</cite>
+      </div>
+
+      <p>By the late 1950s, the populace of these enclaves — numbering approximately 650,000 — was overwhelmingly ethnic Indian and predominantly Hindu, despite significant Catholic populations resulting from centuries of aggressive missionary activity. Economic and cultural analyses demonstrate that Portuguese Catholic colonialism fundamentally altered local attitudes toward education and gender roles over 500 years, with male literacy gaps of 50% between Portuguese-influenced areas and surrounding Indian territories by 1961.</p>
+
+      <h3>The Economic Stranglehold</h3>
+      <p>India applied relentless diplomatic and economic pressure. Visa restrictions paralysed terrestrial transport and trade. Indian labor unions enacted a comprehensive maritime boycott, refusing to service shipping bound for Portuguese India. India extended sweeping economic sanctions to Portugal itself. Border incidents escalated: in 1961, peaceful Indian "trespasses" into Goa were met by Portuguese gunfire, killing 21–30 Indians — an episode that hardened Indian public opinion and rendered cautious diplomacy untenable.</p>
+
+      <p>By November 1961, India's diplomatic options had all but run out. The UN General Assembly's Declaration on Colonial Independence of December 1960 had explicitly condemned continued Portuguese rule. India set its deadline: by mid-December 1961, it would claim Goa — one way or another.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 2 · NATIONALISM
+═══════════════════════════════════════════════ -->
+<div id="nationalism" class="parchment-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter II —</span>
+      <h2 class="section-title">The Genesis of Goan Nationalism</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">A sustained, multi-generational indigenous resistance movement gradually transitioned from peaceful political agitation to armed militancy and guerrilla warfare.</p>
+    </div>
+
+    <ul class="phase-list">
+      <li class="phase-item">
+        <div class="phase-num">I</div>
+        <div class="phase-content">
+          <div class="phase-title">Intellectual Awakening — 1928</div>
+          <div class="phase-body">The intellectual foundation of modern Goan nationalism was laid in 1928 by <strong class="hl">Tristão de Bragança Cunha</strong>, a French-educated Goan engineer widely revered as the "father of Goan nationalism." He established the Goa Congress Committee during the Calcutta session of the Indian National Congress, publishing seminal tracts such as <em>Four Hundred Years of Foreign Rule</em> and <em>Denationalisation of Goa</em>, garnering solidarity from Rajendra Prasad, Subhas Chandra Bose, and Jawaharlal Nehru.</div>
+        </div>
+      </li>
+      <li class="phase-item">
+        <div class="phase-num">II</div>
+        <div class="phase-content">
+          <div class="phase-title">Goa Revolution Day — 18 June 1946</div>
+          <div class="phase-body">Ram Manohar Lohia visited Goa and, alongside Cunha, Purushottam Kakodkar, and Laxmikant Bhembre, organised a massive civil disobedience protest in Panaji against the suspension of basic civil liberties. The Portuguese security apparatus violently disrupted the protest and arrested the organizers. This ignited intermittent mass demonstrations throughout the latter half of 1946, instilling bold resistance across the populace.</div>
+        </div>
+      </li>
+      <li class="phase-item">
+        <div class="phase-num">III</div>
+        <div class="phase-content">
+          <div class="phase-title">Armed Militancy — Azad Gomantak Dal</div>
+          <div class="phase-body">As Portugal entrenched its authoritarian apparatus, routinely deporting dissidents to penal colonies in Angola and Cabo Verde, a significant faction concluded that Gandhian non-violence was inadequate. The <strong class="hl">Azad Gomantak Dal</strong> (Free Goa Party), led by Vishwanath Lawande, Prabhakar Sinari, and Prabhakar Vaidya, vowed to dismantle Portuguese rule through direct action, sabotage, and guerrilla warfare. Other groups included the Goa Liberation Army (founded by Shivajirao Desai), the United Front of Goans, and the Quit Goa Organisation.</div>
+        </div>
+      </li>
+      <li class="phase-item">
+        <div class="phase-num">IV</div>
+        <div class="phase-content">
+          <div class="phase-title">Dadra & Nagar Haveli Liberated — Summer 1954</div>
+          <div class="phase-body">Between 22 July and 11 August, a multi-factional coalition of armed activists successfully invaded and liberated the landlocked enclaves of Dadra and Nagar Haveli. Despite intense internal factionalism — including clashes between communist cells led by Narayan Palekar and Azad Gomantak Dal operatives — the operation forced isolated Portuguese police garrisons to surrender. This served as a crucial strategic proof of concept, demonstrating the acute vulnerability of Portuguese infrastructure when geographically cut off.</div>
+        </div>
+      </li>
+      <li class="phase-item">
+        <div class="phase-num">V</div>
+        <div class="phase-content">
+          <div class="phase-title">The 1955 Satyagraha Massacre — 15 August 1955</div>
+          <div class="phase-body">Between 3,000 and 5,000 unarmed Indian satyagrahis attempted to cross the Goan border at six geographical locations, met with sustained, lethal force by Portuguese police. Between <strong class="hl">21 and 30 activists were killed</strong>, with many more wounded. The massacre triggered furious parliamentary debates and forced India to formally sever diplomatic relations on 1 September 1955, shuttering its consul office in Goa and ending all pretense of a negotiated bilateral settlement.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 3 · DIPLOMATIC STALEMATE & PLANNING
+═══════════════════════════════════════════════ -->
+<div id="planning" class="mid-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter III —</span>
+      <h2 class="section-title">Diplomatic Stalemate & The Decision for War</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="two-col reveal">
+      <div>
+        <div class="prose">
+          <p>Prime Minister Nehru, deeply invested in his international image as a global peacemaker and primary architect of the Non-Aligned Movement, initially resisted mounting domestic political pressure for unilateral military intervention. He harbored hopes that global diplomatic isolation combined with severe economic blockade would precipitate a voluntary Portuguese withdrawal.</p>
+
+          <h3>The Western Strategic Dilemma</h3>
+          <p>The escalating crisis placed Western powers in an acute strategic paradox. The Eisenhower and Kennedy administrations were heavily dependent on their NATO ally Portugal — specifically the <strong class="hl">Lajes Field airbase in the Azores</strong>, described by a Presidential Task Force as the "single most valuable facility which the US Government is authorized by a foreign government to use." Losing it would require "a major overhaul of US wartime plans."</p>
+
+          <p>The United Kingdom, bound to Portugal by the Treaty of Windsor (the oldest active diplomatic alliance in the world) and to India as a fellow Commonwealth member, found itself completely immobilized.</p>
+        </div>
+      </div>
+      <div>
+        <div class="cards-grid" style="grid-template-columns:1fr;">
+          <div class="card" style="opacity:1;transform:none;">
+            <div class="card-icon">🕊️</div>
+            <div class="card-title">Casus Belli — November 1961</div>
+            <div class="card-body">On 17 November, Portuguese forces fired on the Indian passenger vessel <em>S.S. Sabarmati</em> near Anjediva, wounding a crew member. A week later on 24 November, Portuguese troops fired on another Indian boat, killing one passenger and severely injuring the chief engineer. This provoked a firestorm in Parliament, with all members demanding immediate retribution.</div>
+          </div>
+          <div class="card" style="opacity:1;transform:none;">
+            <div class="card-icon">🌍</div>
+            <div class="card-title">The Afro-Asian Catalyst — 1961</div>
+            <div class="card-body">At the 1961 Seminar on Portuguese Colonialism in New Delhi and Bombay, African anti-colonial leaders including <strong>Amílcar Cabral</strong> argued passionately that liberating Goa was the catalyst needed to fracture the entire Portuguese Empire across Angola, Mozambique, and Guinea-Bissau.</div>
+          </div>
+          <div class="card" style="opacity:1;transform:none;">
+            <div class="card-icon">📜</div>
+            <div class="card-title">The Final Decision — December 1961</div>
+            <div class="card-body">On 10 December, Nehru declared to the world press that "the continuance of Goa under Portuguese rule is an impossibility." The Cabinet approved military action in late November. Lt. Gen. J.N. Chaudhuri had been preparing war plans as early as 10 November, ordered to stand by for "Operation Vijay" on 29 November.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pull-quote reveal">
+      <p class="pull-quote-text">When Defence Minister General Júlio Botelho Moniz warned Salazar in 1960 that defending Goa was a "suicide mission in which we could not succeed," Salazar ignored the military reality and ordered Vassalo e Silva to ensure Portuguese soldiers could only be "either victorious or dead."</p>
+      <span class="pull-quote-attr">— The Portuguese Dictatorial Mandate</span>
+    </div>
+
+    <div class="prose reveal">
+      <h3>Salazar's Doomed Defence Plans</h3>
+      <p>The Portuguese high command devised two interlinked defensive strategies, both fundamentally flawed:</p>
+      <p><strong class="hl">Plano Sentinela (Sentinel Plan):</strong> Ground defence units organized into four battle groups, mandated to trade ground for time, demolishing infrastructure to slow the Indian advance — theoretically long enough for Western allies to exert diplomatic pressure at the UN. Cavalry Captain Carlos Azaredo publicly critiqued it as "a totally unrealistic and unachievable plan" because staged retreats required sophisticated portable radios the Portuguese entirely lacked.</p>
+      <p><strong class="hl">Plano de Barragens (Barrage Plan):</strong> A scorched-earth policy involving mass demolition of bridges and systematic mining of main roadways, buildings, and beach approaches. Stymied by a severe shortage of explosive mines, rendering widespread mining unviable.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 4 · ORDER OF BATTLE
+═══════════════════════════════════════════════ -->
+<div id="order" class="dark-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter IV —</span>
+      <h2 class="section-title">Order of Battle</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">The military confrontation was characterised by an overwhelming, almost absurd asymmetry in manpower, armor, aerial dominance, and naval capabilities.</p>
+    </div>
+
+    <!-- Commanders -->
+    <h3 style="font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:1.5rem;" class="reveal">Command Structure</h3>
+    <div class="commanders-row reveal">
+      <div class="commander-card">
+        <div class="commander-avatar">🎖️</div>
+        <div class="commander-name">Lt. Gen. J.N. Chaudhuri</div>
+        <div class="commander-role">Theatre Commander</div>
+        <div class="commander-side">🇮🇳 Southern Command</div>
+      </div>
+      <div class="commander-card">
+        <div class="commander-avatar">⚔️</div>
+        <div class="commander-name">Maj. Gen. K.P. Candeth</div>
+        <div class="commander-role">Ground Force Commander</div>
+        <div class="commander-side">🇮🇳 Goa Task Force</div>
+      </div>
+      <div class="commander-card">
+        <div class="commander-avatar">⚓</div>
+        <div class="commander-name">Rear-Adm. B.S. Soman</div>
+        <div class="commander-role">Naval Commander</div>
+        <div class="commander-side">🇮🇳 Western Naval Task Force</div>
+      </div>
+      <div class="commander-card">
+        <div class="commander-avatar">✈️</div>
+        <div class="commander-name">Air VM Erlic Pinto</div>
+        <div class="commander-role">Air Operations</div>
+        <div class="commander-side">🇮🇳 Indian Air Force</div>
+      </div>
+      <div class="commander-card">
+        <div class="commander-avatar">🏳️</div>
+        <div class="commander-name">Manuel Vassalo e Silva</div>
+        <div class="commander-role">128th Governor-General</div>
+        <div class="commander-side">🇵🇹 Portuguese India</div>
+      </div>
+    </div>
+
+    <!-- Strength Comparison -->
+    <div class="strength-section reveal">
+      <h3 style="font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:1.5rem;">Force Comparison</h3>
+      <div class="strength-item">
+        <div class="strength-label"><span>India — Total Troops</span><span>~45,000</span></div>
+        <div class="strength-bar"><div class="strength-fill fill-india" data-width="95"></div></div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-label"><span>Portugal — Total Troops</span><span>~3,995</span></div>
+        <div class="strength-bar"><div class="strength-fill fill-portugal" data-width="10"></div></div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-label"><span>India — Naval Vessels</span><span>16 Ships</span></div>
+        <div class="strength-bar"><div class="strength-fill fill-india" data-width="90"></div></div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-label"><span>Portugal — Naval Vessels</span><span>4 (1 sloop + 3 patrol)</span></div>
+        <div class="strength-bar"><div class="strength-fill fill-portugal" data-width="8"></div></div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-label"><span>India — Combat Aircraft</span><span>40+</span></div>
+        <div class="strength-bar"><div class="strength-fill fill-india" data-width="98"></div></div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-label"><span>Portugal — Combat Aircraft</span><span>Virtually None</span></div>
+        <div class="strength-bar"><div class="strength-fill fill-portugal" data-width="1"></div></div>
+      </div>
+    </div>
+
+    <!-- Tabs for Army/Navy/Air -->
+    <div class="tabs reveal">
+      <div class="tab-nav">
+        <button class="tab-btn active" data-tab="army">🪖 Army</button>
+        <button class="tab-btn" data-tab="navy">⚓ Navy</button>
+        <button class="tab-btn" data-tab="air">✈️ Air Force</button>
+        <button class="tab-btn" data-tab="daman">Daman Front</button>
+        <button class="tab-btn" data-tab="diu">Diu Front</button>
+      </div>
+
+      <div id="army" class="tab-pane active">
+        <div class="battle-grid">
+          <div class="battle-side battle-india">
+            <div class="battle-side-title">India 🇮🇳</div>
+            <div class="battle-count">~45,000 infantry personnel</div>
+            <div class="battle-unit"><span class="unit-icon">🪖</span><span>17th Infantry Division (minus 1 brigade) — advanced from north via Belgaum–Ponda axis</span></div>
+            <div class="battle-unit"><span class="unit-icon">🪖</span><span>50th Parachute Brigade (2nd Sikh Light Infantry) — vanguard attack force, spearheading northeast thrust</span></div>
+            <div class="battle-unit"><span class="unit-icon">🪖</span><span>63rd and 48th Infantry Brigades — pressing from eastern axis</span></div>
+            <div class="battle-unit"><span class="unit-icon">🚗</span><span>7th Light Cavalry with M4 Sherman tanks and armored cars — western axis with mobility and firepower</span></div>
+            <div class="battle-unit"><span class="unit-icon">💣</span><span>10 Field Regiment with medium artillery; 4/3 Gwalior Lancers (8 Cav); AMX-13 light tank regiments</span></div>
+            <div class="battle-unit"><span class="unit-icon">👮</span><span>~1,200 Indian Border Police as auxiliary forces</span></div>
+            <div class="battle-unit"><span class="unit-icon">📻</span><span>Engineers, medical units, Bombay Sappers, field ambulances — full logistical train</span></div>
+          </div>
+          <div class="battle-side battle-portugal">
+            <div class="battle-side-title">Portugal 🇵🇹</div>
+            <div class="battle-count">~3,500–3,995 total (incl. auxiliaries)</div>
+            <div class="battle-unit"><span class="unit-icon">🪖</span><span>3 infantry battalions (50th Regt HQ in Velha Goa) — totalling ~2,200 European officers/enlisted</span></div>
+            <div class="battle-unit"><span class="unit-icon">🏰</span><span>Detached platoons at Pernem, Mapuca, Ponda, Canacona, Vasco, Margão, Bicholim</span></div>
+            <div class="battle-unit"><span class="unit-icon">💣</span><span>Bofors 105mm howitzers at Margão, Vasco, Bicholim; AA guns at Dabolim and Marmagao harbor</span></div>
+            <div class="battle-unit"><span class="unit-icon">🚗</span><span>4 armored car reconnaissance squadrons at Mapuca, Bicholim, Ponda, Ballem — <em>no tanks</em></span></div>
+            <div class="battle-unit"><span class="unit-icon">🔫</span><span>Small arms: Mauser rifles, Sten submachine guns, Bren LMGs, 60mm/3-inch mortars, 6-pdr AT guns</span></div>
+            <div class="battle-unit"><span class="unit-icon">👮</span><span>~3,000 locally-recruited Goan police/customs volunteers along the border</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="navy" class="tab-pane">
+        <div class="battle-grid">
+          <div class="battle-side battle-india">
+            <div class="battle-side-title">Indian Navy 🇮🇳</div>
+            <div class="battle-count">Western Naval Task Force — 16 ships total</div>
+            <div class="battle-unit"><span class="unit-icon">🛳️</span><span><strong>INS Vikrant</strong> — Light Aircraft Carrier (supporting role)</span></div>
+            <div class="battle-unit"><span class="unit-icon">🛳️</span><span><strong>INS Mysore</strong> (flagship, cruiser) — Flagship of the task force</span></div>
+            <div class="battle-unit"><span class="unit-icon">🛳️</span><span><strong>INS Delhi</strong> — Cruiser, dispatched 400 miles north for Diu operations</span></div>
+            <div class="battle-unit"><span class="unit-icon">⚓</span><span><strong>INS Betwa, INS Beas, INS Trishul</strong> — Frigates; Betwa engaged Afonso de Albuquerque with radar-guided fire</span></div>
+            <div class="battle-unit"><span class="unit-icon">⚓</span><span><strong>INS Cauvery</strong> — Sloop; joined bombardment of the Afonso</span></div>
+            <div class="battle-unit"><span class="unit-icon">🚢</span><span>4 Minesweepers + Marine commandos under Lt. Arun Auditto for Anjidiv Island assault</span></div>
+          </div>
+          <div class="battle-side battle-portugal">
+            <div class="battle-side-title">Portuguese Navy 🇵🇹</div>
+            <div class="battle-count">Portuguese India Naval Command — negligible</div>
+            <div class="battle-unit"><span class="unit-icon">🛳️</span><span><strong>NRP Afonso de Albuquerque</strong> — aging 2,400-ton sloop (commissioned 1943), 120mm guns; optically targeted; the sole serious naval asset</span></div>
+            <div class="battle-unit"><span class="unit-icon">⚓</span><span><strong>NRP Sirius</strong> and <strong>NRP Antares</strong> — small inshore patrol crafts (Cacine class)</span></div>
+            <div class="battle-unit"><span class="unit-icon">🔧</span><span>1 tug used as minesweeper; 4 total small patrol crafts — no combat aircraft support</span></div>
+            <div class="battle-unit"><span class="unit-icon">⚠️</span><span><strong>Zero tanks, no armored vehicles, no modern radar</strong> — Portuguese main fleet was deployed in Africa; no reinforcements possible</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="air" class="tab-pane">
+        <div class="battle-grid">
+          <div class="battle-side battle-india">
+            <div class="battle-side-title">Indian Air Force 🇮🇳</div>
+            <div class="battle-count">Absolute air supremacy from Hour 1</div>
+            <div class="battle-unit"><span class="unit-icon">💣</span><span><strong>20 English Electric Canberra medium bombers</strong> — 12 from No. 5 Wing, staging from Pune; led by Group Captain Suhas Phatak and Sq. Ldr. Vivian Goodwin</span></div>
+            <div class="battle-unit"><span class="unit-icon">✈️</span><span><strong>6 Dassault Mystère fighter-bombers</strong> — suppressed mortar positions and AA batteries</span></div>
+            <div class="battle-unit"><span class="unit-icon">✈️</span><span><strong>6 Hawker Hunter multi-role aircraft</strong> — used at Daman, striking mortar positions and fort guns in six sorties</span></div>
+            <div class="battle-unit"><span class="unit-icon">✈️</span><span><strong>6 Dassault Toofani fighter-bombers</strong> and <strong>6 de Havilland Vampire fighters</strong> (TAC)</span></div>
+            <div class="battle-unit"><span class="unit-icon">🚁</span><span>22 Dakota transports for logistics; Lancer jets for airfield suppression at Diu</span></div>
+          </div>
+          <div class="battle-side battle-portugal">
+            <div class="battle-side-title">Portuguese Air Force 🇵🇹</div>
+            <div class="battle-count">Functionally non-existent</div>
+            <div class="battle-unit"><span class="unit-icon">✈️</span><span>A few C-47/Dakotas at Dabolim belonging to local Goan airline TAIP — used for civilian evacuation only; managed a daring escape off the damaged runway during the Canberra strikes</span></div>
+            <div class="battle-unit"><span class="unit-icon">⚠️</span><span>1–2 Fiat G.91 fighters on standby — <strong>no combat sorties recorded</strong></span></div>
+            <div class="battle-unit"><span class="unit-icon">🔫</span><span>Several outdated anti-aircraft guns at Dabolim and Marmagao — quickly silenced by IAF fighters</span></div>
+            <div class="battle-unit"><span class="unit-icon">❌</span><span>No radar, no interception capability, no strategic bombing assets whatsoever</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="daman" class="tab-pane">
+        <div class="battle-grid">
+          <div class="battle-side battle-india">
+            <div class="battle-side-title">India — Daman Front 🇮🇳</div>
+            <div class="battle-count">1 Maratha Brigade + support</div>
+            <div class="battle-unit"><span class="unit-icon">🪖</span><span>1 Maratha Brigade — 2 Battalions, pre-dawn surprise assault 18 Dec</span></div>
+            <div class="battle-unit"><span class="unit-icon">💣</span><span>48 Heavy Commando Battalion (para); Bombay Sappers; 23 Battery (9 Fd Regt) with two 25-pdr guns</span></div>
+            <div class="battle-unit"><span class="unit-icon">✈️</span><span>IAF Mystère fighters — 6 sorties against mortar positions and fort guns</span></div>
+            <div class="battle-unit"><span class="unit-icon">⚓</span><span>Indian Navy offshore blockade patrols</span></div>
+          </div>
+          <div class="battle-side battle-portugal">
+            <div class="battle-side-title">Portugal — Daman 🇵🇹</div>
+            <div class="battle-count">~360 troops + ~200 police/customs</div>
+            <div class="battle-unit"><span class="unit-icon">🏰</span><span>3 companies (~360 Portuguese European soldiers) holding Daman Fort and airfield (Odeth Grove, control tower)</span></div>
+            <div class="battle-unit"><span class="unit-icon">👮</span><span>~200 Portuguese police and 30 customs guards; defensive mines and emplacements covering approaches</span></div>
+            <div class="battle-unit"><span class="unit-icon">⚠️</span><span>Last-ditch defense near the airfield and Damao Pequeno; fell by midday 19 December</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="diu" class="tab-pane">
+        <div class="battle-grid">
+          <div class="battle-side battle-india">
+            <div class="battle-side-title">India — Diu Front 🇮🇳</div>
+            <div class="battle-count">62nd Para Brigade + 67th Brigade</div>
+            <div class="battle-unit"><span class="unit-icon">🪖</span><span>62nd Para Brigade including 4 Rajput, 2/8 Gorkha plus 67th Brigade</span></div>
+            <div class="battle-unit"><span class="unit-icon">🛳️</span><span>INS Delhi — 6-inch guns providing naval gunfire support from 400 miles north of Goa</span></div>
+            <div class="battle-unit"><span class="unit-icon">✈️</span><span>Lancer jets for airfield suppression; Indian Marine landing on Diu city jetty</span></div>
+          </div>
+          <div class="battle-side battle-portugal">
+            <div class="battle-side-title">Portugal — Diu 🇵🇹</div>
+            <div class="battle-count">~360 troops</div>
+            <div class="battle-unit"><span class="unit-icon">🏰</span><span>3 companies (~360 troops) at Diu Fort; ~70 local police/customs</span></div>
+            <div class="battle-unit"><span class="unit-icon">⚠️</span><span>No significant armor or artillery; colonial governor do Carmo captured by Indian Marines at the jetty</span></div>
+            <div class="battle-unit"><span class="unit-icon">🏳️</span><span>Small Portuguese police force melted away once isolation was complete</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 5 · CHRONOLOGY
+═══════════════════════════════════════════════ -->
+<div id="chronology" class="parchment-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter V —</span>
+      <h2 class="section-title">Chronology of the Campaign</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">17 – 19 December 1961: Every objective seized in under 48 hours.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">11 December 1961</div>
+          <div class="timeline-title">Troop Concentration Complete</div>
+          <div class="timeline-body">By 11 December, Southern Command had amassed forces. The 17th Infantry Division staged near Belgaum; 50th Para Brigade moved from Agra/Satara for rapid deployment. Transport trains ran in secrecy; civilian movements curtailed. TAC HQ and Canberra bombers staged in position. Navy warships moved to blockade positions by midnight 17/18 Dec.</div>
+        </div>
+        <div class="timeline-center"><div class="timeline-dot"></div></div>
+        <div style="flex:1"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div style="flex:1"></div>
+        <div class="timeline-center"><div class="timeline-dot"></div></div>
+        <div class="timeline-content">
+          <div class="timeline-date">17 December 1961 — Day Zero</div>
+          <div class="timeline-title">Ultimatum Issued; Preliminary Incursions Begin</div>
+          <div class="timeline-body">India formally delivered an ultimatum demanding Portuguese withdrawal or facing invasion. Preliminary patrols crossed the border late on 17 Dec to secure outposts — border post at Maulinguem seized. The Portuguese response: silence. Operation Vijay officially commenced at midnight.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">18 December 1961 — 04:00</div>
+          <div class="timeline-title">H-Hour: Main Offensive Launched</div>
+          <div class="timeline-body">At 04:00 the main offensive struck simultaneously at Goa, Daman and Diu. H-hour set at first light (~05:15). Two waves of Canberra bombers dropped 63,000 lbs of high-explosive bombs on Dabolim airfield, cratering the runway. IAF Mystère and Hunter fighters destroyed the wireless station at Bambolim, severing Portuguese communications to Lisbon. In Daman, 1 Maratha Brigade attacked pre-dawn (02:00).</div>
+        </div>
+        <div class="timeline-center"><div class="timeline-dot"></div></div>
+        <div style="flex:1"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div style="flex:1"></div>
+        <div class="timeline-center"><div class="timeline-dot"></div></div>
+        <div class="timeline-content">
+          <div class="timeline-date">18 December — 12:15 PM</div>
+          <div class="timeline-title">Battle of Mormugao Harbor</div>
+          <div class="timeline-body">INS Betwa signaled the NRP <em>Afonso de Albuquerque</em> to surrender at a range of 7,500 yards. When the Portuguese vessel replied "wait," Betwa opened fire at 12:18 PM. The second salvo struck the Afonso's foremast, collapsing it onto the main director, instantly degrading fire control and wounding the captain. By 12:35 PM, the burning Afonso ran aground off Donna Paula jetty. By afternoon, Margão and most of Goa territory were in Indian hands.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">18 December — Afternoon</div>
+          <div class="timeline-title">Daman & Diu Secured</div>
+          <div class="timeline-body">Daman fort and airfield captured by 07:00, with the last defenders of Moti Daman surrendering midday 19 Dec. Diu's airstrip was blocked and the fort seized by evening, with the small Portuguese police force dissolving. Within 26 hours of crossing the frontier, Indian armored and infantry units had captured major urban centers of Panaji, Mapuçá, and Bicholim with minimal resistance. Diu fell with similar speed; local police surrendered or fled.</div>
+        </div>
+        <div class="timeline-center"><div class="timeline-dot"></div></div>
+        <div style="flex:1"></div>
+      </div>
+
+      <div class="timeline-item">
+        <div style="flex:1"></div>
+        <div class="timeline-center"><div class="timeline-dot"></div></div>
+        <div class="timeline-content">
+          <div class="timeline-date">19 December — 14:00</div>
+          <div class="timeline-title">Anjidiv Island Falls</div>
+          <div class="timeline-body">A Marine commando party under Lt. Arun Auditto landed on Anjidiv island from INS Trishul. Initially deceived by a white flag, the Indian forces came under fire, suffering 7 KIA and 19 WIA. After naval bombardment, the island fell by 14:00. The tiny island held a lighthouse and radio station of strategic importance.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">19 December 1961 — 20:30</div>
+          <div class="timeline-title">Unconditional Surrender</div>
+          <div class="timeline-body">At Vasco da Gama, Governor-General Manuel António Vassalo e Silva — in direct, conscious defiance of Salazar's absolute orders to fight to the last man — signed the instrument of unconditional surrender at 8:30 PM, officially terminating 451 years of Portuguese sovereignty in India. He chose to prioritize his soldiers' lives over the pride of the dictatorship. For this act, upon his return to Portugal, he was court-martialed, cashiered from the army, and forced into exile. He would not be rehabilitated until the Carnation Revolution of 1974.</div>
+        </div>
+        <div class="timeline-center"><div class="timeline-dot"></div></div>
+        <div style="flex:1"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 6 · MILITARY OPERATIONS
+═══════════════════════════════════════════════ -->
+<div id="operations" class="dark-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter VI —</span>
+      <h2 class="section-title">Military Operations in Detail</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="accordion reveal">
+      <div class="accordion-item open">
+        <button class="accordion-header">
+          🗺️ &nbsp; The Aerial Campaign — Immediate Infrastructure Neutralisation
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Air operations, delegated to Air Vice Marshal Erlic Pinto, focused on establishing immediate, absolute air supremacy, paralyzing Portuguese logistics, and severing Goa's communication with Lisbon.</p>
+            <p>The operation commenced with a devastating precision strike by two waves of <strong class="hl">English Electric Canberra medium bombers flying from bases in Pune</strong>, commanded by Group Captain Suhas Sadashiv Phatak and Squadron Leader Vivian Christopher Goodwin. Twelve Canberras dropped 63,000 lbs of high-explosive bombs directly onto the Dabolim runway, followed by a second raid of eight Canberras. The objective was strictly tactical — to crater the runway and prevent any Portuguese military reinforcement from Portugal, while strictly adhering to orders to avoid damaging terminal buildings and civilian facilities.</p>
+            <p>Remarkably, amidst the chaotic bombardment, two TAIP civilian aircraft managed a daring escape from the apron, taking off from the damaged runway to ferry civilians to safety.</p>
+            <p>Concurrently, IAF Dassault Mystère, Hawker Hunter, and de Havilland Vampire fighters flew continuous sorties suppressing Portuguese mortar positions, silencing outdated AA batteries in forts, and obliterating the critical wireless communication station at Bambolim. This effectively blinded and deafened Portuguese command, severing their primary link to both field units and political masters in Europe.</p>
+            <div class="highlight-quote">At Daman, IAF Mystère fighters flew six successive sorties striking mortar positions and guns deployed within the historic fort, breaking the will of the Portuguese garrison.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">
+          ⚓ &nbsp; The Naval Theater — Battle of Mormugao Harbor
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>The naval dimension of Operation Vijay represented one of the few pure surface naval actions of the post-WWII period. The defining engagement occurred off Mormugao port, where INS Betwa and INS Beas, supported by INS Cauvery, faced the NRP <em>Afonso de Albuquerque</em>.</p>
+            <p>The technological disparity was decisive. Both sides used medium-caliber guns (4.5-inch on Indian frigates, 4.7-inch on the Portuguese sloop) — but the modern Indian ships were equipped with advanced fire-control radar, whereas the <em>Afonso</em> relied entirely on optical targeting. Furthermore, the <em>Betwa</em> utilised proximity-fused shells from its aft guns, designed to detonate in the air and blanket the <em>Afonso</em>'s exposed, open-backed gun mounts with lethal shrapnel.</p>
+            <p>The <em>Afonso</em> courageously cut her anchor cable to get underway and returned fire, but the overmatch was insurmountable. Betwa's second salvo struck the <em>Afonso</em>'s foremast, causing it to collapse onto the main director — instantly degrading fire control, wounding the captain, and killing two bridge crew members. As Beas and Cauvery joined the barrage, the <em>Afonso</em> sustained crippling damage: forward guns annihilated, propulsion engines permanently disabled, aft magazines flooded.</p>
+            <p>By 12:35 PM, utterly gutted by fire, the burning <em>Afonso</em> ran aground off Donna Paula jetty. She was a total loss, later sold for scrap. Concurrently, the NRP <em>Sirius</em> retreated and was scuttled by its own crew. Indian ships bombarded Anjediva Island into submission, securing total maritime dominance of Portuguese India's waters.</p>
+            <p>The cruiser INS Delhi was dispatched 400 miles north for Diu operations, providing 6-inch naval gunfire support against coastal fortifications.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">
+          🪖 &nbsp; The Ground Offensive — Three-Axis Advance on Goa
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>The terrestrial invasion was characterised by blinding speed and the complete, systemic collapse of the Portuguese delaying strategy. The Indian Army deployed along three primary axes, outnumbering defenders by at least nine to one:</p>
+            <p><strong class="hl">Northeast Axis:</strong> The elite 50th Parachute Brigade, robustly supported by the 17th Infantry Division, led the vanguard attack thrusting deep into the heart of Goa from Belgaum/Ponda.</p>
+            <p><strong class="hl">Eastern Axis:</strong> The 63rd and 48th Infantry Brigades pressed inward from the east, quickly overwhelming isolated border outposts.</p>
+            <p><strong class="hl">Western Axis:</strong> The 2nd Sikh Light Infantry and 7th Light Cavalry thrust forward from the west, utilizing mobility, shock value, and firepower of their M4 Sherman tanks. A southern column marched up from Karwar.</p>
+            <p>The Portuguese Plano de Barragens was briefly executed — defending forces managed to demolish several bridges, temporarily slowing Indian logistics. However, the sheer volume of Indian infantry, coupled with amphibious capabilities, easily bypassed static obstacles. Portuguese defenders, starved of anti-tank weapons and unable to communicate laterally, were rapidly enveloped.</p>
+            <p>Within a mere 26 hours of crossing the frontier, Indian armored and infantry units had captured Panaji, Mapuçá, and Bicholim with minimal resistance. By noon on 18 Dec, Indian troops had captured Velha Goa, Vasco, and Margão. A ceremonial summit at 20:30 on 19 December at Vasco saw Governor Vassalo e Silva formally capitulate to Brigadier K.S. Dhillon.</p>
+            <div class="highlight-quote">General Candeth later noted that although Salazar's orders were "to fight to the last man," he "appreciated the futility" and spared Goa the destruction the dictator had mandated — choosing humanity over imperial pride.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">
+          🏝️ &nbsp; Anjidiv Island — The Costly Side Operation
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Anjidiv, a tiny island west of Goa with a lighthouse and radio station, was assigned to Marine commandos under <strong class="hl">Lieutenant Arun Auditto</strong>, launching from INS Trishul. INS Mysore and Trishul moved off Marmagao at H+50 minutes.</p>
+            <p>On 19 December, Auditto's landing party was initially deceived by a white flag — then came under fire. The Indian forces suffered <strong class="hl-red">7 killed and 19 wounded</strong> in the ensuing firefight, making Anjidiv the single costliest engagement relative to force size in the entire operation. After sustained naval bombardment, the island fell by 14:00 on 19 Dec, with the remaining Portuguese personnel surrendering.</p>
+            <p>The incident underscored the stark difference in Portuguese resistance between main territorial forces (who largely stood down) and isolated outpost commanders who chose to follow Salazar's doomed mandate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">
+          🏰 &nbsp; The Portuguese Perspective — Vassalo e Silva's Courage
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p>Governor-General Manuel António Vassalo e Silva faced an impossible situation. By the evening of 18 December, the strategic reality was undeniable. He took stock of the overwhelming numerical and technological superiority of Indian forces, the total destruction of his naval and air assets, the depletion of food and ammunition, and the imminent collapse of his ground forces.</p>
+            <p>In direct, conscious defiance of Salazar's absolute orders to fight to the last man, Vassalo e Silva recognised the "bloody futility" of the situation. Choosing to prioritise the lives of his conscripts over the pride of the dictatorial regime in Lisbon, he sought to spare his soldiers from a "useless sacrifice."</p>
+            <p>At 8:30 PM on 19 December 1961, at Vasco da Gama, Vassalo e Silva signed the instrument of unconditional surrender, officially terminating 451 years of Portuguese sovereignty in India — and bringing the 48-hour war to a triumphant end for India.</p>
+            <p>For this act of pragmatic humanitarianism and military realism, Vassalo e Silva was severely punished by his own government upon his return to Portugal. He was reviled by the regime as a coward and traitor, court-martialed, cashiered from the army, and forced into exile. He would not be fully rehabilitated nor have his military rank restored until 1974, when the Carnation Revolution brought democracy to Portugal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 7 · CASUALTIES & POWs
+═══════════════════════════════════════════════ -->
+<div id="casualties" class="mid-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter VII —</span>
+      <h2 class="section-title">Casualties, POWs & Human Toll</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">Despite the overwhelming force applied, the swiftness of the operation kept total casualties remarkably low for a modern corps-level military offensive.</p>
+    </div>
+
+    <div class="reveal">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Measure</th>
+            <th>India</th>
+            <th>Portugal</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong class="hl">Killed in Action</strong></td>
+            <td>8 (Menon's official) / ~22–34 (all services)</td>
+            <td>17 (EAM report) / 30–31 (USI Journal)</td>
+            <td>Menon gave "8" (ground-only: 4 Anjidiv, 2 Daman, 2 Diu, "none in Goa"). Navy KIA adds ~9. USI gives 34 total KIA.</td>
+          </tr>
+          <tr>
+            <td><strong class="hl">Wounded in Action</strong></td>
+            <td>15–20 (Candeth) / 51 total (USI)</td>
+            <td>38–57</td>
+            <td>Includes naval and air crew casualties across all three theaters.</td>
+          </tr>
+          <tr>
+            <td><strong class="hl">Prisoners of War</strong></td>
+            <td>N/A</td>
+            <td>3,240–4,669</td>
+            <td>3,412 in Goa, 853 in Daman, 403 in Diu. Includes ~1,300 non-combatants and auxiliaries.</td>
+          </tr>
+          <tr>
+            <td><strong class="hl">Officers Captured</strong></td>
+            <td>—</td>
+            <td>~236 European officers</td>
+            <td>Most POWs repatriated to Portugal by early 1962; many officers court-martialed upon return.</td>
+          </tr>
+          <tr>
+            <td><strong class="hl">Civilian Casualties</strong></td>
+            <td colspan="2">Negligible — a handful of villagers accidentally wounded by stray fire</td>
+            <td>International observers noted Panjim calm; no reported noncombatant deaths.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col reveal">
+      <div>
+        <h3 style="font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">POW Administration</h3>
+        <p style="color:var(--aged);font-size:0.95rem;line-height:1.8;">Following surrender, the Indian military established four primary detention camps across Goa, managed by specific Army units:</p>
+        <ul style="color:var(--aged);font-size:0.92rem;line-height:2;list-style:none;padding:0;">
+          <li>🏕️ <strong class="hl">Aquem Baixo</strong> — administered by 2nd Bihar Regiment</li>
+          <li>🏕️ <strong class="hl">Ponda</strong> — managed by 2nd Para Maratha</li>
+          <li>🏕️ <strong class="hl">Vasco</strong> — guarded by 4th Sikh Light Infantry</li>
+          <li>🏕️ <strong class="hl">Aguada</strong> — overseen by 2nd Sikh Light Infantry</li>
+        </ul>
+        <p style="color:var(--aged);font-size:0.95rem;line-height:1.8;margin-top:1rem;">Captured personnel included foreign media correspondents embedded with Portuguese forces — journalist Urbano Carrasco of the <em>Diário Popular</em> and RTP cameramen held for 60 days. The ICRC, United Arab Republic, and Brazil served as diplomatic intermediaries for repatriation of over 4,000 personnel back to Europe.</p>
+      </div>
+      <div>
+        <div class="treaty-box">
+          <div class="treaty-title">Candeth's Proclamation — 20 December 1961</div>
+          <p class="treaty-text">"India has no hostility to any person, whatever his nationality; no violence will be tolerated; the lives and property of all will be respected; and everyone is free to carry out his lawful avocations."</p>
+        </div>
+        <div style="margin-top:1.5rem;color:var(--aged);font-size:0.95rem;line-height:1.8;">
+          <p>India consistently maintained a specific legal stance: it was not formally "at war" with Portugal, characterising the invasion as a <em>police action or liberation</em>. Nevertheless, India emphasised strict adherence to the humanitarian standards of the Third Geneva Convention — publicly declaring willingness to repatriate all Portuguese nationals immediately, without holding soldiers hostage against the fate of Indian nationals interned by Portuguese authorities in Mozambique and Macao.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 8 · PORTUGUESE RULE & LOCAL RESPONSE
+═══════════════════════════════════════════════ -->
+<div class="dark-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter VIII —</span>
+      <h2 class="section-title">Portuguese Administration & Goan Reactions</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="two-col reveal">
+      <div class="prose">
+        <p>In late 1961, Portuguese Goa was a police state. Local freedoms were curtailed with press censorship and assembly bans. Governor Vassalo e Silva imposed curfews and mined border roads. Anti-Indian propaganda in Panjim claimed Goa had "been invaded by African mercenaries" — none were present. In fact, Indian intelligence found Portuguese troop strength overstated: only ~3,500 European troops were in Portuguese India, with others drafted to Angola.</p>
+        <p>This repression generated panic. Villagers fled to India, and morale in the garrison was at rock-bottom. Even Portuguese-owned Radio Goa admitted on 16 December that chaos was exaggerated and called for peace.</p>
+        <h3>The Population's Response</h3>
+        <p>During the invasion, most Goans remained passive. There were no mass uprisings or organized resistance inside Goa on 18–19 December. Some underground activists had earlier sabotaged infrastructure (railway bridges, telephone lines), but by D-Day these had little military effect.</p>
+      </div>
+      <div>
+        <div class="highlight-quote" style="margin-top:0;">
+          "Life in Panjim was quite normal… public utilities and transport services functioning almost as usual; we found local people waving Indian flags."
+          <cite>— Correspondent Ian Colvin, reporting from Panjim on 19 December 1961</cite>
+        </div>
+        <div style="margin-top:1.5rem;color:var(--aged);font-size:0.95rem;line-height:1.8;">
+          <p>Churches and temples were untouched. Commerce and daily life resumed quickly. Some loyalist Portuguese officials quietly fled with evacuation convoys. Many Goan police units and local civil servants surrendered en masse, swearing allegiance to India. The bulk of Portuguese civil administration was suspended.</p>
+          <p>British and foreign journalists arriving in Panjim noted everything peaceful, with locals displaying "great relief" that the standoff had ended. Civilian casualties were negligible — international observers reported no harm to Goan civilians during the takeover.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 9 · INTERNATIONAL REACTIONS
+═══════════════════════════════════════════════ -->
+<div id="international" class="parchment-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter IX —</span>
+      <h2 class="section-title">International Reactions & The UN Crisis</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">The annexation triggered an immediate, intense crisis at the United Nations Security Council, fracturing the international community along Cold War, NATO, and North-South fault lines.</p>
+    </div>
+
+    <div class="cards-grid reveal">
+      <div class="card">
+        <div class="card-icon">🇺🇸</div>
+        <div class="card-title">United States</div>
+        <div class="card-body">Secretary of State Rusk privately sympathised with India's anti-colonial motive but insisted on Charter principles. The crux of the American dilemma: the Lajes Field airbase in the Portuguese Azores — "the single most valuable facility which the US Government is authorized by a foreign government to use." Ambassador Adlai Stevenson delivered a scathing condemnation at the UN. The US co-sponsored the ceasefire resolution, then quietly recognised Goa's new status once the operation succeeded.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🇬🇧</div>
+        <div class="card-title">United Kingdom</div>
+        <div class="card-body">The Earl of Home (Foreign Secretary) told the House of Lords that Britain "made repeated representations" to India urging no force, but added Britain "would find it impossible… to engage in hostilities against India" despite the 1899 Anglo-Portuguese Alliance. Britain dispatched HMS Rhyl to the Indian Ocean for possible evacuation of British nationals. Ultimately accepted Goa's annexation and supported the eventual 1974 treaty.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🇵🇹</div>
+        <div class="card-title">Portugal at the UN</div>
+        <div class="card-body">Portugal's letter of 18 December condemned India's "full-scale armed attack" and requested immediate Security Council intervention, describing it as "premeditated and unprovoked aggression" violating sovereign rights. This legal argument was championed by the US, UK, France, Turkey, Chile, and Ecuador. A draft resolution demanded immediate ceasefire, unconditional withdrawal of Indian forces, and resumption of negotiations.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🇷🇺</div>
+        <div class="card-title">Soviet Union</div>
+        <div class="card-body">The USSR vetoed the Western-backed ceasefire resolution on 22–23 December, decisively defeating it. Soviet Premier Khrushchev sent a telegram to Nehru validating that "the resolute actions of the Government of India to do away with outposts of colonialism in its territory were absolutely lawful and justified." The entire Soviet bloc backed India, along with Yugoslavia, Indonesia, and Ghana.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <div class="card-title">Non-Aligned Nations</div>
+        <div class="card-body">Many newly independent nations sided with India, viewing Goa as a colonial injustice remedied. India emphasised UNGA Resolution 1514 (Dec 1960) on decolonization. The consensus from the 1961 Seminar on Portuguese Colonialism was that destroying the myth of Portuguese invincibility in India would directly fuel and legitimize growing insurgencies in Angola, Mozambique, and Guinea-Bissau.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚖️</div>
+        <div class="card-title">The Soviet Veto — 22 Dec</div>
+        <div class="card-body">The Western-backed resolution secured 7 affirmative votes but was defeated by the Soviet veto. The UNSC took no action. A UN General Assembly debate in January 1962 also ended without binding measures — the majority (led by non-aligned and communist states) acknowledged India's argument. No resolution passed condemning India. The world accepted the fait accompli.</div>
+      </div>
+    </div>
+
+    <div class="pull-quote reveal">
+      <p class="pull-quote-text">India's annexation of Goa is the only instance in modern history where the UN system ultimately acquiesced to the "recovery" of territory by sheer military force, despite initial vehement condemnation by a majority of States in the Security Council.</p>
+      <span class="pull-quote-attr">— International Legal Scholars on the Goa Precedent</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 10 · LEGAL ARGUMENTS
+═══════════════════════════════════════════════ -->
+<div id="legal" class="dark-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter X —</span>
+      <h2 class="section-title">Legal Arguments on Sovereignty</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">India and Portugal offered starkly different legal justifications — a confrontation between classical European notions of sovereignty and the emerging doctrine of self-determination.</p>
+    </div>
+
+    <div class="two-col reveal">
+      <div>
+        <div style="border-top:3px solid #006600;padding-top:1.5rem;margin-bottom:2rem;">
+          <h3 style="font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:0.1em;color:#7ec87e;text-transform:uppercase;margin-bottom:1rem;">🇵🇹 Portugal's Position</h3>
+          <p style="color:var(--aged);font-size:0.95rem;line-height:1.8;">Salazar's government argued Goa was <em>de jure</em> Portuguese territory, never legally ceded to India. It cited treaties (the Anglo-Portuguese Alliance of 1899 and earlier diplomatic notes) to claim any change required mutual consent. Portugal told the UN the attack violated the UN Charter — specifically Articles 2(3) and 2(4) mandating peaceful dispute settlement and prohibition on use of force against territorial integrity. The merits of the anti-colonial case, the Western delegations argued, were entirely secondary to the violation of basic Charter principles.</p>
+          <div class="highlight-quote" style="margin-top:1rem;">
+            "The inhabitants of Goa… indicated for centuries their will to be and remain Portuguese."
+            <cite>— Salazar, rejecting Indian sovereignty claims</cite>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="border-top:3px solid #ff9900;padding-top:1.5rem;margin-bottom:2rem;">
+          <h3 style="font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:0.1em;color:#ffc870;text-transform:uppercase;margin-bottom:1rem;">🇮🇳 India's Position</h3>
+          <p style="color:var(--aged);font-size:0.95rem;line-height:1.8;">India denied Goa was foreign territory. It pointed to India's Constitution declaring Goa part of India from December 1954, and to UN resolutions on colonialism. India posited that Portugal's claim to sovereignty was an archaic "myth" already rejected by the UN General Assembly through resolution 1542 (XV). India advanced a revolutionary legal theory: <em>colonialism itself constituted "permanent aggression,"</em> and India was forced to act in self-defense to protect the local Indian population. India relied heavily on UNGA Resolution 1514 (XV) — Granting of Independence to Colonial Countries and Peoples — and Resolution 1699 (XVI).</p>
+          <div class="highlight-quote" style="margin-top:1rem;">
+            "There is no legal frontier between India and Goa. A nation cannot commit aggression against its own frontier or its own people."
+            <cite>— India's UN Delegation, December 1961</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose reveal">
+      <h3>The Contested Legal Legacy</h3>
+      <p>The UNSC debate over Goa remains a pivotal moment in the evolution of international jurisprudence. It signaled a profound normative shift: the traditional, absolute sanctity of territorial integrity established by European powers was no longer viewed by the emerging Global South and Eastern Bloc as an impenetrable shield for the preservation of overseas colonial holdings.</p>
+      <p>Neutral analysts observe that India effectively treated Goa as its rightful own territory under colonial occupation. The outcome set a controversial precedent: forcefully ending a colonial holdout without UN authorization. Subsequent treaty codified reality — Portugal relinquished all claims in 1974, retroactively validating India's action. International lawyers largely consider Goa's annexation a legal anomaly — technically an unlawful use of force under the Charter, but justified in practice by the principle of self-determination.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 11 · POST-CONFLICT INTEGRATION
+═══════════════════════════════════════════════ -->
+<div class="mid-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter XI —</span>
+      <h2 class="section-title">Post-Conflict Integration</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="prose reveal">
+      <p>With the Portuguese gone, India swiftly moved to formally integrate the newly acquired territories. Immediately following the December 19 surrender, the enclaves were placed under transitional military administration commanded by Major General K.P. Candeth, who served as the first Lieutenant Governor.</p>
+
+      <h3>The Goa, Daman and Diu (Administration) Act, 1962</h3>
+      <p>By March 1962, the Indian Parliament enacted this foundational legislation formally incorporating the territories into the Indian Union as a singular Union Territory. Section 5 of the Act ensured administrative continuity by stipulating that all existing local laws would remain in force until amended by a competent Indian legislature. Indian Rupees replaced the Portuguese escudo; Portuguese criminal codes were replaced; Portuguese was removed as the compulsory medium in schools (made optional). The Union Nacional party was banned and its assets seized.</p>
+
+      <h3>The 1967 Opinion Poll — Goa's Unique Democracy</h3>
+      <p>A major test came in 1967 when the central government proposed merging Goa with Maharashtra state. Goans overwhelmingly rejected this in an "Opinion Poll" — the only referendum ever held in independent India — maintaining Goa's separate identity. Goa ultimately achieved full statehood on 30 May 1987, becoming India's 25th state. Daman and Diu retained Union Territory status.</p>
+
+      <h3>The 1974 Treaty — Formal Recognition</h3>
+    </div>
+
+    <div class="treaty-box reveal">
+      <div class="treaty-title">India–Portugal Mutual Recognition Treaty — 31 December 1974</div>
+      <p class="treaty-text">"Portugal acknowledges that the territories of Goa, Daman, Diu, Dadra and Nagar Haveli have already become parts of India and hereby recognises the full sovereignty of India over these territories."</p>
+    </div>
+
+    <div class="prose reveal">
+      <p>It was not until the Carnation Revolution of April 1974, which successfully overthrew the Estado Novo dictatorship in Portugal, that formal diplomatic ties with India were finally restored. On 31 December 1974, democratic Portugal formally recognised the full sovereignty of India over these territories. Ambassadors were exchanged in 1975. Portuguese Prime Minister Mário Soares hailed Goa's incorporation. General Vassalo e Silva was finally rehabilitated and had his military rank restored that same year.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 12 · LONG-TERM LEGACY
+═══════════════════════════════════════════════ -->
+<div id="legacy" class="dark-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Chapter XII —</span>
+      <h2 class="section-title">Long-Term Significance & Legacy</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">The annexation ended 451 years of European colonialism in South Asia — and permanently altered the United Nations' frameworks governing sovereignty and the use of force.</p>
+    </div>
+
+    <div class="cards-grid reveal">
+      <div class="card">
+        <div class="card-icon">🏛️</div>
+        <div class="card-title">End of South Asian Colonialism</div>
+        <div class="card-body">Goa's annexation marked the definitive end of European colonialism in South Asia. It bolstered Indian national pride and territorial integrity, giving India control of its full western coastline. 19 December is still commemorated annually in Goa as <strong>Liberation Day</strong>.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <div class="card-title">Catalyst for African Liberation</div>
+        <div class="card-body">The destruction of the myth of Portuguese invincibility directly fuelled and legitimised growing insurgencies in Angola, Mozambique, and Guinea-Bissau. African revolutionary leaders had explicitly argued at the 1961 Delhi Seminar that liberating Goa was the necessary first step to fracturing the entire Portuguese Empire.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚖️</div>
+        <div class="card-title">International Law Precedent</div>
+        <div class="card-body">Operation Vijay permanently altered UN frameworks governing sovereignty and use of force. India's successful defense of colonialism as "permanent aggression" signaled to liberation movements across Africa and Asia that the era of European colonial immunity had definitively ended — accelerating the global wave of decolonization.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎨</div>
+        <div class="card-title">Indo-Portuguese Heritage Preserved</div>
+        <div class="card-body">Goa's Indo-Portuguese heritage was celebrated and protected. Churches, forts, and monuments were preserved intact. Goan Catholic education and legal systems retained Portuguese-influenced elements. The famous church architecture, festivals, cuisine, and music remained as before, fostering international tourism. Today Portugal has an honorary consul in Panaji.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗳️</div>
+        <div class="card-title">Democratic Identity</div>
+        <div class="card-body">Elections to Goa's territorial assembly were held in 1963, with Dayanand Bandodkar becoming the first Chief Minister. The legislative assembly met for the first time at the historic Adilshah Palace. Goa sent representatives to Indian Parliament. The 1967 opinion poll confirmed Goans wanted their own distinct identity within India.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤝</div>
+        <div class="card-title">India-Portugal Relations</div>
+        <div class="card-body">After the 1974 Carnation Revolution, India-Portugal ties normalised rapidly. Portugal joined the EU, and India-Portugal trade and cultural links grew through the Lusophone community. Many Goans obtained Portuguese passports in the 1980s–90s due to ancestry laws, reinforcing personal ties. Bilateral relations today are warm and amicable.</div>
+      </div>
+    </div>
+
+    <div class="ornament reveal">✦ ✦ ✦</div>
+
+    <div class="pull-quote reveal">
+      <p class="pull-quote-text">Operation Vijay was the inevitable culmination of a collision between an ascendant, post-colonial nation-state seeking consolidation of its natural borders, and a decaying European dictatorship clinging desperately to the anachronistic legal fictions of eternal empire.</p>
+      <span class="pull-quote-attr">— Exhaustive Strategic Analysis of Operation Vijay, 1961</span>
+    </div>
+  </div>
+</div>
+
+<!-- APPENDICES -->
+<div class="mid-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">— Appendices —</span>
+      <h2 class="section-title">Primary Documents & Diplomatic Cables</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="accordion reveal">
+      <div class="accordion-item">
+        <button class="accordion-header">
+          📜 &nbsp; Treaty of 31 December 1974 — Full Text (Appendix A)
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p><em>"Portugal acknowledges that the territories of Goa, Daman, Diu, Dadra and Nagar Haveli have already become parts of India and hereby recognises the full sovereignty of India over these territories."</em></p>
+            <p style="margin-top:1rem;">— India–Portugal Mutual Recognition Treaty, signed New Delhi, 31 December 1974; ratified and in force 1975. Diplomatic relations resumed thereafter with exchange of Ambassadors.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          📜 &nbsp; Candeth's Proclamation — 20 December 1961 (Appendix B)
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p><em>"India has no hostility to any person, whatever his nationality; no violence will be tolerated; the lives and property of all will be respected; and everyone is free to carry out his lawful avocations."</em></p>
+            <p style="margin-top:1rem;">— Major General K.P. Candeth, Military Governor, Proclamation issued 20 December 1961. Candeth assured Goans they would retain their language and culture.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          📜 &nbsp; Selected Diplomatic Cables (Appendix C)
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <p><strong class="hl">US State Dept Analysis, 18 December 1961:</strong> <em>"At midnight… Indian troops with tanks and artillery had moved into Goa… India put into execution its premeditated plans of aggression."</em></p>
+            <p style="margin-top:1rem;"><strong class="hl">Portuguese Letter to UN, 18 December 1961:</strong> <em>"India launched a full-scale armed attack… resulting in much damage and many casualties… we ask for immediate cease-fire."</em></p>
+            <p style="margin-top:1rem;"><strong class="hl">India's UN Position, 18 December 1961:</strong> <em>"There is no legal frontier between India and Goa… India has not attacked Goa; Goa was never an integral part of British India."</em></p>
+            <p style="margin-top:1rem;"><strong class="hl">Soviet Premier Khrushchev's Telegram to Nehru:</strong> <em>"The resolute actions of the Government of India to do away with outposts of colonialism in its territory were absolutely lawful and justified."</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">Operation Vijay — Liberation of Goa</div>
+  <div class="footer-sub">17 – 19 December 1961 · A Definitive Historical Account</div>
+  <p class="footer-sources">
+    Sources: Indian Defence Ministry official history "Operation Vijay – The Liberation of Goa" (1966); USI Journal retrospective analyses; UN Yearbook 1961; US State Department Foreign Relations volumes (FRUS 1961–63); India–Portugal Treaty 1974 (UNTS Volume 982); Stanford University diplomatic archives; British Modern Military History Society; Biblio UGENT academic study; Contemporary press: The Hindu, Times of India, Los Angeles Times; Memoirs: Vassalo e Silva, Nehru speeches.
+  </p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // ── Tab functionality
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.dataset.tab;
+      const parent = btn.closest('.tabs');
+      parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      parent.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    });
+  });
+
+  // ── Accordion functionality
+  document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.parentElement;
+      const isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+      // Toggle current
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // ── Intersection Observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal, .stat-item, .card, .timeline-item, .phase-item').forEach(el => {
+    observer.observe(el);
+  });
+
+  // ── Strength bars animation
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.strength-fill').forEach(fill => {
+          const w = fill.dataset.width;
+          fill.style.width = w + '%';
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.strength-section').forEach(s => barObserver.observe(s));
+
+  // ── Back to top button
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('backTop');
+    btn.classList.toggle('visible', window.scrollY > 500);
+  });
+
+  // ── Counter animation for stats
+  function animateCounter(el, target, duration = 2000, suffix = '') {
+    const isDecimal = target.toString().includes('.');
+    const start = 0;
+    const step = (timestamp) => {
+      if (!el._startTime) el._startTime = timestamp;
+      const progress = Math.min((timestamp - el._startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = isDecimal ? (start + (target - start) * eased).toFixed(1) : Math.floor(start + (target - start) * eased);
+      el.textContent = current.toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target.toLocaleString() + suffix;
+    };
+    requestAnimationFrame(step);
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const nums = entry.target.querySelectorAll('.stat-number');
+        nums.forEach(num => {
+          const text = num.textContent;
+          if (text === '451') animateCounter(num, 451);
+          else if (text === '48hrs') { /* keep as is */ }
+          else if (text === '45,000') animateCounter(num, 45000);
+          else if (text === '3,995') animateCounter(num, 3995);
+          else if (text === '4,669') animateCounter(num, 4669);
+          else if (text === '1974') animateCounter(num, 1974);
+        });
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const statsBar = document.querySelector('.stats-bar');
+  if (statsBar) statsObserver.observe(statsBar);
+</script>
+</body>
+</html>
